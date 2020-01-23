@@ -145,7 +145,6 @@ int do_start_scheduling(message *m_ptr)
 {
 	register struct schedproc *rmp;
 	int rv, proc_nr_n, parent_nr_n;
-	printf("%d\n", _ENDPOINT_P(rmp->endpoint));
 	
 	/* we can handle two kinds of messages here */
 	assert(m_ptr->m_type == SCHEDULING_START || 
