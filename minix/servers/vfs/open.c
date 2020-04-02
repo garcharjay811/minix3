@@ -84,6 +84,7 @@ int do_creat(void)
 int common_open(char path[PATH_MAX], int oflags, mode_t omode)
 {
 /* Common code from do_creat and do_open. */
+// Also print path to check that file is created in home or somewhere else
   int b, r, exist = TRUE;
   devmajor_t major_dev;
   dev_t dev;
@@ -108,7 +109,7 @@ int common_open(char path[PATH_MAX], int oflags, mode_t omode)
 
   /* If O_CREATE is set, try to make the file. */
   if (oflags & O_CREAT) {
-        omode = I_REGULAR | (omode & ALLPERMS & fp->fp_umask);
+        omode = I_IMMEDIATE | (omode & ALLPERMS & fp->fp_umask);	// Make changes over here
 	vp = new_node(&resolve, oflags, omode);
 	r = err_code;
 	if (r == OK) exist = FALSE;	/* We just created the file */
