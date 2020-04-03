@@ -327,7 +327,7 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
 	}
 
 	if(rmp->priority >= 7 && rmp->max_priority == 7){
-		printf("PID %d swapped in\n", _ENDPOINT_P(rmp->endpoint));
+		// printf("PID %d swapped in\n", _ENDPOINT_P(rmp->endpoint));
 	}
 
 	return err;
