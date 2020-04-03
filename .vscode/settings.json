@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "schedproc.h": "c",
+        "sched.h": "c",
+        "config.h": "c",
+        "types.h": "c",
+        "const.h": "c",
+        "sys_config.h": "c",
+        "com.h": "c",
+        "proc.h": "c",
+        "bitmap.h": "c",
+        "syslib.h": "c",
+        "proto.h": "c",
+        "cdefs.h": "c",
+        "endpoint.h": "c",
+        "random": "c",
+        "resource.h": "c",
+        "stat.h": "c",
+        "fs.h": "c"
+    }
+}
