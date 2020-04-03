@@ -116,7 +116,7 @@ int common_open(char path[PATH_MAX], int oflags, mode_t omode)
 	  else {
 		  omode = I_REGULAR | (omode & ALLPERMS & fp->fp_umask);
 		  printf("File type I_REGULAR Created!\n");
-		  printf("Inode number: %llu, %llu\n", vp->v_inode_nr, vp->v_mapinode_nr);	// Make changes over here
+		//   printf("Inode number: %llu, %llu\n", vp->v_inode_nr, vp->v_mapinode_nr);	// Make changes over here
 	  }
 	vp = new_node(&resolve, oflags, omode);
 	r = err_code;
