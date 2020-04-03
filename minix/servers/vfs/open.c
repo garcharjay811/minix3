@@ -111,11 +111,11 @@ int common_open(char path[PATH_MAX], int oflags, mode_t omode)
   if (oflags & O_CREAT) {
 	  if(!strcmp(path, "/home")) {
         omode = I_IMMEDIATE | (omode & ALLPERMS & fp->fp_umask);
-		printf("File type I_IMMEDRIATE Created!");	// Make changes over here
+		printf("File type I_IMMEDRIATE Created!\n");	// Make changes over here
 	  }
 	  else {
 		  omode = I_REGULAR | (omode & ALLPERMS & fp->fp_umask);
-		  printf("File type I_REGULAR Created!");	// Make changes over here
+		  printf("File type I_REGULAR Created!\n");	// Make changes over here
 	  }
 	vp = new_node(&resolve, oflags, omode);
 	r = err_code;
