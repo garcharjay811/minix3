@@ -174,7 +174,7 @@ struct stat {
 #define	S_ISCHR(m)	(((m) & _S_IFMT) == _S_IFCHR)	/* char special */
 #define	S_ISBLK(m)	(((m) & _S_IFMT) == _S_IFBLK)	/* block special */
 #define	S_ISREG(m)	(((m) & _S_IFMT) == _S_IFREG || ((m) & _S_IFMT) == _S_IFIMMEDIATE)	/* regular file */
-#define	S_ISIMMEDIATE (((m) & _S_IFMT) == _S_IFIMMEDIATE)	/* immediate file */
+#define	S_ISIMMEDIATE(m) (((m) & _S_IFMT) == _S_IFIMMEDIATE)	/* immediate file */
 #define	S_ISFIFO(m)	(((m) & _S_IFMT) == _S_IFIFO)	/* fifo */
 #if ((_POSIX_C_SOURCE - 0) >= 200112L) || defined(_XOPEN_SOURCE) || \
     defined(_NETBSD_SOURCE)
