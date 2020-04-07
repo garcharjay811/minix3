@@ -93,7 +93,7 @@ int fs_readwrite(void)
 		char immed_buff [33];
 		memset(immed_buff, 0, 33);
 		if ((rip->i_mode & I_TYPE) == I_IMMEDIATE  && (rip->i_dev == 897) ){ 
-			printf("OVER HERE!!\n");
+			// printf("OVER HERE!!\n");
 			int is_immediate = 0 ;
 			int i;
 			if (rw_flag ==WRITING) {
@@ -125,11 +125,12 @@ int fs_readwrite(void)
 						f_size = rip->i_size ;
 						rip->i_mode = I_REGULAR;
 						is_immediate = 0;
-						printf("Is REgular\n");
+						// printf("Is REgular\n");
 					}
 				} else {
 					is_immediate = 1;
-					printf("Is Immediate\n"); }
+					// printf("Is Immediate\n");
+					 }
 			}
 			if (is_immediate == 1) {
 				if (rw_flag == READING) {
