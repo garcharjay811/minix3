@@ -100,7 +100,7 @@ int fs_readwrite(void)
 				if ((f_size + nrbytes) > 33) {
 					if ( position == 0 && nrbytes <= 32) {
 						is_immediate = 1; 
-						printf("Is Immediate\n");
+						printf("Is Immediate = true\n");
 					} 
 					else {
 						register struct buf *bp ;
