@@ -42,7 +42,7 @@ int fs_readwrite(void)
 	return(EINVAL);
 
   mode_word = rip->i_mode & I_TYPE;
-  regular = (mode_word == I_REGULAR || mode_word == I_NAMED_PIPE);
+  regular = (mode_word == I_REGULAR || mode_word == I_NAMED_PIPE || mode_word == I_IMMEDIATE);
   block_spec = (mode_word == I_BLOCK_SPECIAL ? 1 : 0);
   
   /* Determine blocksize */
@@ -89,6 +89,56 @@ int fs_readwrite(void)
 		return EROFS;
 	      
   cum_io = 0;
+
+		char immed buff [41];
+		if ((rip−>imode&ITYPE)==IIMMEDIATE){ int is immediate ;
+		int i;
+		if (rw flag ==WRITING) {
+			if ((f size + nrbytes) > 40) {
+				if ( position == 0 && nrbytes <= 40) {
+					is immediate = 1; } else {
+					register struct buf ∗bp ;
+				for (i = 0; i < f size; i++) {
+					immed buff[i] = ∗(((char ∗) rip−>i zone)+i); }
+				for (i = 0; i < V2NRTZONES; i++) { rip−>i zone[i] =NOZONE;
+				}
+				rip−>i size = 0;
+				rip−>i update = ATIME | CTIME | MTIME; IN MARKDIRTY ( r i p ) ;
+				bp = new block(rip, (off t) 0); if (bp==NULL)
+				panic(”error”) ;
+				for (i = 0; i < f size; i++) {
+					b data(bp)[i] = immed buff[i];
+				}
+				MARKDIRTY(bp) ;
+				put block (bp , PARTIAL DATA BLOCK) ;
+				// same as after rw chunk is called
+				position += f size ;
+				f size = rip−>i size ;
+				rip−>i mode = IREGULAR;
+				is immediate = 0;
+			}
+			} else {
+				is immediate = 1; }
+		}
+		if (is immediate == 1) {
+			if (rw flag ==READING) {
+				r = sys safecopyto (VFS PROC NR, gid , (vir bytes) cum io,
+				(vir bytes)(rip−>i zone + position) , (size t) nrbytes);
+			} else {
+				r = sys safecopyfrom (VFS PROC NR, gid ,
+				(vir bytes) cum io,
+				(vir bytes)(rip−>i zone + position) ,
+				(size t) nrbytes); IN MARKDIRTY ( r i p ) ;
+			}
+			if (r ==OK) {
+				cum io += nrbytes ; position += nrbytes ; nrbytes = 0;
+			}
+			for (int i = 0; i < f size; i++) {
+				immed buff[i] = ∗(((char ∗) rip−>i zone)+i); }
+			printf(”immedbuf: %s\n”, immed buff); }
+		}
+
+
   /* Split the transfer into chunks that don't span two blocks. */
   while (nrbytes > 0) {
 	  off = ((unsigned int) position) % block_size; /* offset in blk*/
