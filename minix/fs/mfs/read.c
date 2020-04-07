@@ -90,52 +90,57 @@ int fs_readwrite(void)
 	      
   cum_io = 0;
 
-		char immed buff [41];
-		if ((rip−>imode&ITYPE)==IIMMEDIATE){ int is immediate ;
+		char immed_buff [33];
+		if ((rip−>i_mode & I_TYPE)==I_IMMEDIATE  && (rip->i_dev == 897) ){ int is_immediate = 0 ;
 		int i;
-		if (rw flag ==WRITING) {
-			if ((f size + nrbytes) > 40) {
-				if ( position == 0 && nrbytes <= 40) {
-					is immediate = 1; } else {
+		if (rw_flag ==WRITING) {
+			if ((f_size + nrbytes) > 33) {
+				if ( position == 0 && nrbytes <= 32) {
+					is_immediate = 1; 
+				} 
+				else {
 					register struct buf ∗bp ;
-				for (i = 0; i < f size; i++) {
-					immed buff[i] = ∗(((char ∗) rip−>i zone)+i); }
-				for (i = 0; i < V2NRTZONES; i++) { rip−>i zone[i] =NOZONE;
+					for (i = 0; i < f_size; i++) {
+						immed_buff[i] = ∗(((char ∗) rip−>i_zone)+i); }
+					for (i = 0; i < V2_NR_TZONES; i++) { rip−>i_zone[i] =NO_ZONE;
+					}
+					rip−>i_size = 0;
+					rip−>i_update = ATIME | CTIME | MTIME; 
+					IN_MARKDIRTY ( rip ) ;
+					bp = new_block(rip, (off_t) 0); 
+					if (bp==NULL)
+					{
+						panic(”error”) ;
+					}
+					for (i = 0; i < f size; i++) {
+						b_data(bp)[i] = immed_buff[i];
+					}
+					MARKDIRTY(bp) ;
+					put_block (bp , PARTIAL_DATA_BLOCK) ;
+					// same as after rw chunk is called
+					position += f_size ;
+					f_size = rip−>i_size ;
+					rip−>i_mode = I_REGULAR;
+					is_immediate = 0;
 				}
-				rip−>i size = 0;
-				rip−>i update = ATIME | CTIME | MTIME; IN MARKDIRTY ( r i p ) ;
-				bp = new block(rip, (off t) 0); if (bp==NULL)
-				panic(”error”) ;
-				for (i = 0; i < f size; i++) {
-					b data(bp)[i] = immed buff[i];
-				}
-				MARKDIRTY(bp) ;
-				put block (bp , PARTIAL DATA BLOCK) ;
-				// same as after rw chunk is called
-				position += f size ;
-				f size = rip−>i size ;
-				rip−>i mode = IREGULAR;
-				is immediate = 0;
-			}
 			} else {
-				is immediate = 1; }
+				is_immediate = 1; }
 		}
-		if (is immediate == 1) {
-			if (rw flag ==READING) {
-				r = sys safecopyto (VFS PROC NR, gid , (vir bytes) cum io,
-				(vir bytes)(rip−>i zone + position) , (size t) nrbytes);
+		if (is_immediate == 1) {
+			if (rw_flag == READING) {
+				r = sys_safecopyto (VFS_PROC_NR, gid , (vir_bytes) cum_io, (vir_bytes)(rip−>i_zone + position) , (size_t) nrbytes);
 			} else {
-				r = sys safecopyfrom (VFS PROC NR, gid ,
-				(vir bytes) cum io,
-				(vir bytes)(rip−>i zone + position) ,
-				(size t) nrbytes); IN MARKDIRTY ( r i p ) ;
+				r = sys_safecopyfrom (VFS_PROC_NR, gid , (vir_bytes) cum_io, (vir_bytes)(rip−>i_zone + position) , (size_t) nrbytes);
+				IN_MARKDIRTY ( rip ) ;
 			}
 			if (r ==OK) {
-				cum io += nrbytes ; position += nrbytes ; nrbytes = 0;
+				cum_io += nrbytes ; 
+				position += nrbytes ; 
+				nrbytes = 0;
 			}
-			for (int i = 0; i < f size; i++) {
-				immed buff[i] = ∗(((char ∗) rip−>i zone)+i); }
-			printf(”immedbuf: %s\n”, immed buff); }
+			for (int i = 0; i < f_size; i++) {
+				immed_buff[i] = ∗(((char ∗) rip−>i_zone)+i); }
+			printf(”immed_buf: %s\n”, immed_buff); }
 		}
 
 
