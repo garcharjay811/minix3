@@ -93,12 +93,14 @@ int fs_readwrite(void)
 		char immed_buff [33];
 		memset(immed_buff, 0, 33);
 		if ((rip->i_mode & I_TYPE) == I_IMMEDIATE  && (rip->i_dev == 897) ){ 
+			printf("OVER HERE!!");
 			int is_immediate = 0 ;
 			int i;
 			if (rw_flag ==WRITING) {
 				if ((f_size + nrbytes) > 33) {
 					if ( position == 0 && nrbytes <= 32) {
 						is_immediate = 1; 
+						printf("Is Immediate");
 					} 
 					else {
 						register struct buf *bp ;
@@ -124,9 +126,11 @@ int fs_readwrite(void)
 						f_size = rip->i_size ;
 						rip->i_mode = I_REGULAR;
 						is_immediate = 0;
+						printf("Is REgular");
 					}
 				} else {
-					is_immediate = 1; }
+					is_immediate = 1;
+					printf("Is Immediate"); }
 			}
 			if (is_immediate == 1) {
 				if (rw_flag == READING) {
